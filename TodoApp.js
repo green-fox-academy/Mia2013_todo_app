@@ -10,7 +10,7 @@ export default class TodoApp {
 
   run() {
     if (this.#args.includes("-l")) {
-      this.numberedListOfTodos ();
+      this.numberedListOfTodos();
     } else if (this.#args.includes("-a")) {
       console.log("Új feladatot ad hozzá"); //this.addTodo();
     } else if (this.#args.includes("-r")) {
@@ -35,19 +35,20 @@ Parancssori argumentumok:
     console.log(intro);
   }
 
-  init(rawTodos){
-    rawTodos.forEach(element => {
-      this.#todoList.push(new Todo(element))
+  init(rawTodos) {
+    rawTodos.forEach((element) => {
+      this.#todoList.push(new Todo(element));
     });
   }
 
-  numberedListOfTodos (){
-    for (let i = 0; i < this.#todoList.length; i ++){
-      const todosFromList = this.#todoList[i].description;
-      console.log (`${i+1} - ${todosFromList}`);
+  numberedListOfTodos() {
+    if (this.#todoList.length === 0) {
+      console.log("Nincs mára tennivalód! :)");
+    } else {
+      for (let i = 0; i < this.#todoList.length; i++) {
+        const todosFromList = this.#todoList[i].description;
+        console.log(`${i + 1} - ${todosFromList}`);
+      }
     }
-
   }
-
-
 }
