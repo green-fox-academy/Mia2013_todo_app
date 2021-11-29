@@ -1,4 +1,5 @@
 import Todo from "./Todo.js";
+import fs from 'fs';
 
 export default class TodoApp {
   #args;
@@ -12,7 +13,12 @@ export default class TodoApp {
     if (this.#args.includes("-l")) {
       this.numberedListOfTodos();
     } else if (this.#args.includes("-a")) {
-      console.log("Új feladatot ad hozzá"); //this.addTodo();
+      if (this.#args[1] === undefined){
+        console.log("Nem lehetséges új feladat hozzáadása: nincs megadva a feladat!");
+      } else{
+        this.addTodo(this.#args[1]);
+      }
+
     } else if (this.#args.includes("-r")) {
       console.log("Eltávolít egy feladatot");
     } else if (this.#args.includes("-c")) {
@@ -50,5 +56,15 @@ Parancssori argumentumok:
         console.log(`${i + 1} - ${todosFromList}`);
       }
     }
+  }
+
+  addTodo (todo){
+
+    let fileContent = fs.readFileSync('todos.json', 'utf-8');    
+    let users = JSON.parse(fileContent);
+    users.push(todo);
+    fileContent = JSON.stringify(users);
+    fs.writeFileSync("todos.json",fileContent,"utf-8");
+    
   }
 }
